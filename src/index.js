@@ -1,4 +1,3 @@
-// PLEASE DON'T change function name
 module.exports = function makeExchange(currency) {
     let coins = {};
     if (currency > 10000) {
@@ -8,24 +7,20 @@ module.exports = function makeExchange(currency) {
     else if (currency <= 0) {
         return coins;
     }
-    if (currency >= 50){
-        coins.H = Math.floor(currency / 50);
-        currency = currency - coins.H * 50;
+    else {
+        let coinDenomination = {
+            H: 50,
+            Q: 25,
+            D: 10,
+            N: 5,
+            P: 1
+        };
+        for (var key in coinDenomination) {
+            if (currency >= coinDenomination[key]){
+                coins[key] = Math.floor(currency / coinDenomination[key]);
+                currency = currency - coins[key] * coinDenomination[key];
+            }
+        }
+        return coins;
     }
-    if (currency >= 25){
-        coins.Q = Math.floor(currency / 25);
-        currency = currency - coins.Q * 25;
-    }
-    if (currency >= 10){
-        coins.D = Math.floor(currency / 10);
-        currency = currency - coins.D * 10;
-    }
-    if (currency >= 5){
-        coins.N = Math.floor(currency / 5);
-        currency = currency - coins.N * 5;
-    }
-    if (currency >= 1){
-        coins.P = currency;
-    }
-    return coins;
 }
